@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+    />
+    <title>投票結果</title>
+  </head>
+  <body class="bg-gray-100">
+    <div class="container mx-auto mt-6 p-4 bg-white rounded-lg shadow-md">
+      {% if voting_open %}
+      <h2 class="text-xl font-bold text-gray-800 mb-4 text-center">
+        投票進行中...
+      </h2>
+      {% else %}
+      <h2 class="text-xl font-bold text-gray-800 mb-4 text-center">投票結果</h2>
+      <div class="flex justify-center mb-4">
+        <div class="ml-8">
+          <img
+            src="static/blue_door.jpg"
+            alt="藍色門"
+            class="mx-auto mb-2 h-96"
+          />
+          <p class="text-center text-xl font-bold text-blue-500">
+            {{ voting_result.blue }}枚金幣
+          </p>
+        </div>
+        <div class="mr-8">
+          <img
+            src="static/red_door.jpg"
+            alt="紅色門"
+            class="mx-auto mb-2 h-96"
+          />
+          <p class="text-center text-xl font-bold text-red-500">
+            {{ voting_result.red }}枚金幣
+          </p>
+        </div>
+      </div>
+      <ul class="list-disc list-inside">
+        {% for voter_id, voter_data in voters.items() %}
+        <li class="mb-1 text-gray-700 text-sm">
+          第{{ voter_id }}組投紅色門 {{ voter_data.red }} 枚金幣，藍色門 {{
+          voter_data.blue }} 枚金幣
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+  </body>
+</html>

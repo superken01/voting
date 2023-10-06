@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+    />
+    <title>投票</title>
+  </head>
+  <body class="bg-gray-100">
+    <div class="container mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
+      <form action="/vote" method="post">
+        <div class="space-y-6">
+          <div class="mb-4">
+            <label
+              for="voter_id"
+              class="block text-md font-medium text-gray-700"
+              >組別：</label
+            >
+            <select
+              name="voter_id"
+              id="voter_id"
+              onchange="checkVoter()"
+              class="mt-2 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            >
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+            </select>
+          </div>
+          <div class="mb-4">
+            <label
+              for="red_count"
+              class="block text-md font-medium text-gray-700"
+              >投紅色門的金幣數量：</label
+            >
+            <input
+              type="number"
+              inputmode="numeric"
+              name="red_count"
+              id="red_count"
+              min="0"
+              required
+              class="mt-2 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              for="blue_count"
+              class="block text-md font-medium text-gray-700"
+              >投藍色門的金幣數量：</label
+            >
+            <input
+              type="number"
+              inputmode="numeric"
+              name="blue_count"
+              id="blue_count"
+              min="0"
+              required
+              class="mt-2 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            />
+          </div>
+          <div class="flex items-center justify-between">
+            <button
+              type="submit"
+              id="submit"
+              class="px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              投票
+            </button>
+            <span id="message" class="text-red-500 text-sm"></span>
+          </div>
+        </div>
+      </form>
+    </div>
+    <script>
+      var votedIds = {{voted_ids | tojson}};
+      function checkVoter() {
+          var voterId = parseInt(document.getElementById('voter_id').value);
+          var disabled = votedIds.includes(voterId);
+          var redCount = document.getElementById('red_count');
+          var blueCount = document.getElementById('blue_count');
+          var submitButton = document.getElementById('submit');
+
+          redCount.disabled = disabled;
+          blueCount.disabled = disabled;
+          submitButton.disabled = disabled;
+
+          // Toggle the styles based on the disabled state
+          toggleDisabledStyles(redCount, disabled);
+          toggleDisabledStyles(blueCount, disabled);
+          toggleDisabledStyles(submitButton, disabled);
+
+          document.getElementById('message').textContent = disabled ? '已投票成功！' : '';
+      }
+
+      // Function to toggle disabled styles
+      function toggleDisabledStyles(element, disabled) {
+          if (disabled) {
+              element.classList.add('bg-gray-200', 'cursor-not-allowed');
+          } else {
+              element.classList.remove('bg-gray-200', 'cursor-not-allowed');
+          }
+      }
+
+      document.getElementById('voter_id').value = '{{ voter_id }}';
+      checkVoter();
+    </script>
+  </body>
+</html>

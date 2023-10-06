@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>投票結果</title>
+  </head>
+  <body>
+    {% if voting_open %}
+    <h2>投票進行中...</h2>
+    {% else %}
+    <h2>投票結果</h2>
+    <p>紅色門：{{ voting_result.red }}枚金幣</p>
+    <p>藍色門：{{ voting_result.blue }}枚金幣</p>
+    <h3>Individual Votes</h3>
+    <ul>
+      {% for voter_id, voter_data in voters.items() %}
+      <li>
+        第{{ voter_id }}組投紅色門 {{ voter_data.red }} 枚金幣，藍色門 {{
+        voter_data.blue }} 枚金幣
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </body>
+</html>

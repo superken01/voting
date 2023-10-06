@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+    />
+    <title>管理頁面</title>
+  </head>
+  <body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+      <h2 class="text-xl font-bold text-gray-800 mb-4 text-center">
+        {% if voting_open %} 投票管理 {% else %} 重新投票 {% endif %}
+      </h2>
+      <form action="/admin" method="post" class="text-center">
+        <input
+          type="hidden"
+          name="operation"
+          value="{% if voting_open %}close{% else %}reset{% endif %}"
+        />
+        <button
+          type="submit"
+          class="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
+        >
+          {% if voting_open %} 開票 {% else %} 開始重新投票 {% endif %}
+        </button>
+      </form>
+    </div>
+  </body>
+</html>
