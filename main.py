@@ -46,6 +46,18 @@ async def post_vote(request: Request,
 @app.get("/results")
 async def get_results(request: Request):
     global voting_open, voting_result, voters
+
+    for voter_id, vote in voters.items():
+        if voting_result['red'] > voting_result['blue']:
+            vote['reward'] = int(vote['red'] * voting_result['blue'] /
+                                 voting_result['red']) - vote['blue']
+        elif voting_result['red'] < voting_result['blue']:
+            vote['reward'] = int(vote['blue'] * voting_result['red'] /
+                                 voting_result['blue']) - vote['red']
+        else:
+            vote['reward'] = 0
+
+    print(voters)
     return templates.TemplateResponse(
         "results.html", {
             "request": request,

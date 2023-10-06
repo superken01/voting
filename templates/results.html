@@ -3,10 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-    />
+    <link rel="stylesheet" href="static/tailwind.min.css" />
     <title>投票結果</title>
   </head>
   <body class="bg-gray-100">
@@ -42,8 +39,8 @@
       <ul class="list-disc list-inside">
         {% for voter_id, voter_data in voters.items() %}
         <li class="mb-1 text-gray-700 text-sm">
-          第{{ voter_id }}組投紅色門 {{ voter_data.red }} 枚金幣，藍色門 {{
-          voter_data.blue }} 枚金幣
+          第 {{ voter_id }} 組投藍色門 {{ voter_data.blue }} 枚金幣，投紅色門 {{
+          voter_data.red }} 枚金幣，可以獲得 {{voter_data.reward}} 枚金幣
         </li>
         {% endfor %}
       </ul>

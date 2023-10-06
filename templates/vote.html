@@ -3,10 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-    />
+    <link rel="stylesheet" href="static/tailwind.min.css" />
     <title>投票</title>
   </head>
   <body class="bg-gray-100">
@@ -80,10 +77,11 @@
       </form>
     </div>
     <script>
+      var votingOpen = {{ voting_open | lower }};
       var votedIds = {{voted_ids | tojson}};
       function checkVoter() {
           var voterId = parseInt(document.getElementById('voter_id').value);
-          var disabled = votedIds.includes(voterId);
+          var disabled = votedIds.includes(voterId) || !votingOpen;
           var redCount = document.getElementById('red_count');
           var blueCount = document.getElementById('blue_count');
           var submitButton = document.getElementById('submit');
